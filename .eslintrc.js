@@ -11,9 +11,9 @@ module.exports = {
     'airbnb/hooks',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    "next/core-web-vitals",
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     "plugin:@typescript-eslint/strict",
+    "next/core-web-vitals",
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -33,6 +33,8 @@ module.exports = {
         "namedComponents": "arrow-function",
         "unnamedComponents": "arrow-function"
       }
-    ]
+    ],
+    "import/prefer-default-export": 0,
+    "jsx-a11y/anchor-is-valid": 0,
   }
 };
