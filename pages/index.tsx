@@ -20,10 +20,27 @@ import { VideoSection } from "components/VideoSection";
 import { ProductsSection } from "components/ProductsSection";
 import { SideMenu } from "components/SideMenu";
 
+import { breakpointWidth } from "constants/index";
+
+import { changeWidth } from "redux/slices/auxSlice";
+import { useAppDispatch } from "redux/hooks";
+
+import { FeatureVideo } from "components/VideoSection/FeaturedVideo";
+
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
   const [isSideMenuVisible, setIsSideMenuVisible] = useState<boolean>(false);
 
-  const [width, setWidth] = useState<number>(0);
+  const windowSize = 0;
+
+  const updateWindowSize = () => {
+    window.addEventListener("resize", () => {
+      dispatch(changeWidth(window.innerWidth));
+      console.log(window.innerWidth);
+    });
+  };
+
+  const [width, setWidth] = useState<number>(windowSize);
 
   const handleClickOpenCloseSideMenu = () => {
     setIsSideMenuVisible(!isSideMenuVisible);
@@ -38,7 +55,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      setWidth(window.innerWidth);
+      dispatch(changeWidth(window.innerWidth));
     });
   }, []);
 
@@ -54,44 +71,12 @@ const Home: NextPage = () => {
 
       <main className="principal">
         <h2 className="titulo-pagina"> Início</h2>
-        <article className="cartao cartao--destaque destaque-video">
-          {width < 768 ? (
-            <Image
-              src={bannerMobile}
-              alt="Banner do cartao"
-              className="cartao__imagem cartao__imagem--mobile"
-              layout="responsive"
-            />
-          ) : (
-            <Image
-              src={banner}
-              alt="Banner do cartao"
-              className="cartao__imagem cartao__imagem--mobile"
-              layout="responsive"
-            />
-          )}
 
-          <div className="cartao__conteudo">
-            <p className="cartao__destaque"> Vídeo em destaque</p>
-            <h3 className="cartao__titulo"> HZC - Título</h3>
-            <p className="cartao__profile">Thiago Rosa</p>
-            <p className="cartao__info cartao__info--tempo"> 33 minutos</p>
-            <p className="cartao__info cartao__info--visualizacao">
-              {" "}
-              33 visualizações
-            </p>
-            <button
-              type="button"
-              className="cartao__botao cartao__botao--play cartao__botao--destaque"
-            >
-              Assistir agora
-            </button>
-          </div>
-        </article>
+        <FeatureVideo />
+
         <article className="cartao cartao--recentes videos-recentes">
           <h3 className="cartao__titulo"> Vídeos recentes</h3>
           <a href="#" className="cartao__link">
-            {" "}
             Ver todos
           </a>
           <ul className="cartao__lista">
@@ -183,6 +168,7 @@ const Home: NextPage = () => {
             </li>
           </ul>
         </article>
+
         <article className="cartao cartao--destaque destaque-produtos">
           <Image
             src={bannerMobile2}
